@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function Cart() {
+function Footer() {
     return (
         <div>
-            cart
+            footer
         </div>
     )
 }
+
+export default Footer;
