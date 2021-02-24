@@ -1,11 +1,11 @@
 import React from 'react'
 
-function cart() {
+function Nav() {
     return (
         <div>
-            cart
+            nav
         </div>
     )
 }
 
-export default cart
+export default Nav;
