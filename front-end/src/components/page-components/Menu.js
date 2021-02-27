@@ -8,6 +8,10 @@ import decreaseProductQuantity from '../../redux/actions/decreaseProductQuantity
 
 import CartIcon from '../element-components/CartIcon';
 
+// css (även flyttat assets folder till front-end src)
+import graphicsHeader from '../../assets/graphics/graphics-header.svg';
+import graphicsFooter from '../../assets/graphics/graphics-footer.svg';
+
 export default function Menu() {
 
     const dispatch = useDispatch();
@@ -68,21 +72,25 @@ export default function Menu() {
     }
 
     return (
-            <div>
-            <h1>Meny</h1>
-            <CartIcon numInCart={numProductsInCart} />
-                {menus.map((menu) => (
-                <div key={menu.id} style={{border: '1px solid red'}}>
-                    <div>
-                        <i onClick={() => handleClickedProduct(menu.id)}>+</i>
-                    </div>
-                    <div>
-                        <p>{menu.title}</p>
-                        <p>{menu.price}</p>
-                    </div>
-                    <p>{menu.desc}</p>
-                </div>
-                ))}
+        <div className="menu-container">
+            <div className="heading-cart-styling">
+                <img src={graphicsHeader}></img>
+                <CartIcon numInCart={numProductsInCart} />
             </div>
+            <h1 className="menu-heading">Meny</h1>
+            {menus.map((menu) => (
+            <div key={menu.id} style={{border: '1px solid red'}}>
+                <div>
+                    <i onClick={() => handleClickedProduct(menu.id)}>+</i>
+                </div>
+                <div className="menu-list">
+                    <p className="menu-list-p-1">{menu.title}</p>
+                    <p className="menu-list-p-2">{menu.price}</p>
+                </div>
+                <p>{menu.desc}</p>
+            </div>
+            ))}
+            <img src={graphicsFooter}></img>
+        </div>
     )
 }
