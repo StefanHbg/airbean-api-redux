@@ -1,11 +1,9 @@
 import React from 'react'
 
-function Nav() {
+export default function Nav() {
     return (
         <div>
             nav
         </div>
     )
 }
-
-export default Nav;
