@@ -6,10 +6,10 @@ import decreaseProductQuantity from '../../redux/actions/decreaseProductQuantity
 import deleteProduct from '../../redux/actions/deleteProduct';
 import increaseArrow from '../../assets/graphics/arrow-up.svg'
 import decreaseArrow from '../../assets/graphics/arrow-down.svg'
-
+// routing
 import { useHistory } from 'react-router-dom';
 
-
+// function that calculates the price and also checks the quantity and multiplies it with the price.
 function calcTotalPrice(array) {
     if (array === null) return 0;
     let price = 0;
@@ -20,22 +20,31 @@ function calcTotalPrice(array) {
     return price;
 }
 
-export default function CartModal() {
+// function that calculates the quantity amount in our cart
+function calcAmountInCart(myCart) {
+    let amount = 0;
+    for (const product of myCart) {
+        amount += product.quantity;
+    }
+    return amount;
+}
 
-    const [localData, setLocalData] = useState([]);
+export default function CartModal({ setNumInCart }) {
+
+    const [localData, setLocalData] = useState([]); // state for the data from our localStorage
     const [totalPrice, setTotalPrice] = useState('');
     const dispatch = useDispatch();
-
     const history = useHistory();
 
+    // on mounting we update our states.
     useEffect(() => {
         const myCart = JSON.parse(localStorage.getItem('myCart'));
         setLocalData(myCart);
         setTotalPrice(calcTotalPrice(myCart));
     }, [])
 
+    // we loop through localData and increaseProductQuantity on it and we're doing the same thing with our localStorage.
     const handleIncreaseQuantity = (id) => {
-        // loopa igenom localData och increaseProductQuantity på den och gör samma på den i localstorage
         for (const obj of localData) {
             if (obj.id === id) {
                 obj.quantity++;
@@ -46,31 +55,33 @@ export default function CartModal() {
         const myCart = JSON.parse(localStorage.getItem('myCart'));
         setLocalData(myCart);  
         setTotalPrice(calcTotalPrice(myCart));  
+        setNumInCart(calcAmountInCart(myCart));
     }
 
+    // we loop through localData and check if it needs to be deleted or only if it needs to be decreased.
     const handleDecreaseQuantity = (id) => {
-        // If quantity is 0 then remove it from array
         for (const obj of localData) {
             if ((obj.id === id) && (obj.quantity !== 1)) {
-                console.log('inne uppe');
-                console.log(obj.quantity);
                 obj.quantity--;
                 dispatch(decreaseProductQuantity(id));
                 localStorage.setItem('myCart', JSON.stringify(localData));
                 const myCart = JSON.parse(localStorage.getItem('myCart'));
                 setLocalData(myCart);  
                 setTotalPrice(calcTotalPrice(myCart));
+                setNumInCart(calcAmountInCart(myCart));
+                
+            // If quantity is 1 then we remove it from our array
             } else if ((obj.id === id) && (obj.quantity === 1)) {
-                console.log('inne');
                 const index = localData.indexOf(obj);
                 localData.splice(index, 1);
                 dispatch(deleteProduct(id));
                 localStorage.setItem('myCart', JSON.stringify(localData));
-                setTotalPrice(calcTotalPrice(JSON.parse(localStorage.getItem('myCart'))));
+                const myCart = JSON.parse(localStorage.getItem('myCart'));
+                setTotalPrice(calcTotalPrice(myCart));
+                setNumInCart(calcAmountInCart(myCart));
             }
         }
     }
-
 
     return (
         <div className="modal-container">

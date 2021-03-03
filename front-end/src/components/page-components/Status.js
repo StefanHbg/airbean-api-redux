@@ -17,14 +17,13 @@ export default function Status() {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setEta(data.eta);
                 setOrderNumber(data.orderNr);
                 setLoading(false);
             })
     }, [])
 
-    // Innan vi har fått datan från API:et så renderas förljande: 
+    // Before we have gotten the Data from the API, loading renders. 
     if (loading) {
         return (
         <div className="loading-container">

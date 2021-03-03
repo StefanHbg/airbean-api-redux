@@ -1,13 +1,13 @@
-import React from 'react'
-import graphicsHeader from '../../assets/graphics/graphics-header.svg';
 import graphicsFooter from '../../assets/graphics/graphics-footer.svg';
-import graphicsJpg from '../../assets/graphics/eva-cortado.jpg'
+import graphicsJpg from '../../assets/graphics/eva-cortado.jpg';
+import Nav from '../element-components/nav/Nav';
 
 export default function About() {
+
     return (
         <div className="about-container">
-            <div>
-                <img alt="heading-svg" src={graphicsHeader}></img>
+            <div className="about-header-container">
+                <Nav />
             </div>
             <h2 className="about-heading">Vårt kaffe</h2>
             <p className="about-paragraph paragraph-bold">Pumpkin spice mug, barista cup, sit macchiato, kopi-luwak, doppio, grounds dripper, crema, strong whipped, variety extra iced id lungo half and half mazagran. Pumpkin spice.</p>
