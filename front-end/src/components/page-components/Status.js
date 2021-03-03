@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import droneSvg from '../../assets/graphics/drone.svg'
 import loader from '../../assets/graphics/loader.png'
 
@@ -7,6 +8,7 @@ export default function Status() {
     const [loading, setLoading] = useState(true);
     const [eta, setEta] = useState('');
     const [orderNumber, setOrderNumber] = useState('');
+    const history = useHistory();
 
     useEffect(() => {
         setLoading(true);
@@ -18,7 +20,7 @@ export default function Status() {
                 console.log(data);
                 setEta(data.eta);
                 setOrderNumber(data.orderNr);
-                //setLoading(false);
+                setLoading(false);
             })
     }, [])
 
@@ -27,7 +29,7 @@ export default function Status() {
         return (
         <div className="loading-container">
             <img className="loading-png" alt="loader-png" src={loader}></img>
-            <p>Din beställnings förbereds</p>
+            <p>Stäng inte sidan. Din beställning tas emot.</p>
         </div>
         )
     }
@@ -42,7 +44,7 @@ export default function Status() {
                 <h2 className="status-h2-styling">Din beställning <br/> är på väg!</h2>
             </div>
             <p className="eta-time"><strong>{eta}</strong> minuter</p>
-            <div className="status-btn-container">
+            <div onClick={() => history.push('/menu')} className="status-btn-container">
                 <button className="status-btn">Ok, cool!</button>
             </div>
         </div>

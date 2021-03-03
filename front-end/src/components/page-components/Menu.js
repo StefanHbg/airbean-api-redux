@@ -56,9 +56,9 @@ export default function Menu() {
     useEffect(() => {
         const myCart = JSON.parse(localStorage.getItem('myCart'));
         if ((localStorage.getItem('myCart') !== null) && (myCart.length !== 0)) {
-            dispatch(addProduct(myCart));
-            // console.log('menus', menus);
-            // console.log('myCart', myCart);
+            //dispatch(addProduct(myCart));
+            console.log('menus', menus);
+            console.log('myCart', myCart);
             for (let i = 0; i < myCart.length; i++) {
                 for (let j = 0; j < menus.length; j++) {
                     if (myCart[i].id === menus[j].id) {
@@ -69,14 +69,14 @@ export default function Menu() {
                 }
             }
         } else {
-            // om myCart === undefined
-            // Då vill vi först kolal hur det ser ut med quantity
-            // console.log('menus???', menus);
-            // console.log('myCart', myCart);
-            
+            let menuArr = Object.assign([], menus);
+            for (const obj of menuArr) {
+                obj.quantity = 0;
+            }
+            setMenus(menuArr);
         }
         // eslint-disable-next-line
-    }, [menus, numProductsInCart])
+    }, [products])
 
     const handleClickedProduct = (id) => {
         let foundProduct = false;
@@ -127,7 +127,7 @@ export default function Menu() {
                 <section className="product-container" key={menu.id}>
                     <div className="add-to-cart-container">
                         <div onClick={() => handleClickedProduct(menu.id)} className="add-to-cart-btn">
-
+                    
                             {(menu.quantity !== 0) ? 
                                 <p className="add-to-cart-btn-text remove-from-cart">-</p>
                             :
